@@ -1,8 +1,8 @@
 spring:
     r2dbc:
         url: r2dbc:postgresql://localhost:5432/wallet
-        username: user
-        password: password
+        username: postgresql
+        password: postgresql
     kafka:
         bootstrap-servers: localhost:9092
     flyway:

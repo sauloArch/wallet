@@ -4,8 +4,8 @@ services:
     image: postgres:13
     environment:
       POSTGRES_DB: wallet
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgresql
+      POSTGRES_PASSWORD: postgresql
     ports:
       - "5432:5432"
   kafka:
@@ -19,24 +19,3 @@ services:
     image: wurstmeister/zookeeper:3.4.6
     ports:
       - "2181:2181"
-  user-service:
-    build: ./user-service
-    ports:
-      - "8081:8081"
-    depends_on:
-      - postgres
-      - kafka
-  wallet-service:
-    build: ./wallet-service
-    ports:
-      - "8082:8082"
-    depends_on:
-      - postgres
-      - kafka
-  transaction-service:
-    build: ./transaction-service
-    ports:
-      - "8083:8083"
-    depends_on:
-      - postgres
-      - kafka
