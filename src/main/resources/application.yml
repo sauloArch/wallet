@@ -1,0 +1,12 @@
+spring:
+    r2dbc:
+        url: r2dbc:postgresql://localhost:5432/wallet
+        username: user
+        password: password
+    kafka:
+        bootstrap-servers: localhost:9092
+
+logging:
+    level:
+        org.springframework: INFO
+        org.springframework.kafka: DEBUG

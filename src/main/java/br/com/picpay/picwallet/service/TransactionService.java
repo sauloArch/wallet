@@ -1,7 +1,7 @@
 package br.com.picpay.picwallet.service;
 
 import br.com.picpay.picwallet.controller.transaction.dto.TransactionResponseDto;
-import br.com.picpay.picwallet.domain.entity.Transaction;
+import br.com.picpay.picwallet.domain.entity.TransactionEntity;
 import br.com.picpay.picwallet.domain.mapper.TransactionMapper;
 import br.com.picpay.picwallet.domain.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
@@ -19,8 +19,8 @@ public class TransactionService {
         this.mapper = mapper;
     }
 
-    public Mono<TransactionResponseDto> createTransaction(final Transaction transaction) {
-        return transactionRepository.save(transaction)
+    public Mono<TransactionResponseDto> createTransaction(final TransactionEntity transactionEntity) {
+        return transactionRepository.save(transactionEntity)
                 .map(mapper::toDto);
     }
 

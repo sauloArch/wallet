@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Table("wallets")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Wallet {
+public class WalletEntity {
 
     @Id
     private Long id;

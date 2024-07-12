@@ -1,11 +1,11 @@
 package br.com.picpay.picwallet.service;
 
 import br.com.picpay.picwallet.controller.wallet.dto.WalletResponseDto;
-import br.com.picpay.picwallet.domain.entity.Transaction;
-import br.com.picpay.picwallet.domain.entity.Wallet;
+import br.com.picpay.picwallet.domain.entity.TransactionEntity;
+import br.com.picpay.picwallet.domain.entity.WalletEntity;
 import br.com.picpay.picwallet.domain.mapper.WalletMapper;
 import br.com.picpay.picwallet.domain.repository.WalletRepository;
-import br.com.picpay.picwallet.events.KafkaProducer;
+import br.com.picpay.picwallet.events.TransactionProducer;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -21,22 +21,22 @@ public class WalletService {
 
     private final WalletRepository walletRepository;
     private final WalletMapper mapper;
-    private final KafkaProducer producer;
+    private final TransactionProducer producer;
 
-    public WalletService(WalletRepository walletRepository, WalletMapper mapper, KafkaProducer producer) {
+    public WalletService(WalletRepository walletRepository, WalletMapper mapper, TransactionProducer producer) {
         this.walletRepository = walletRepository;
         this.mapper = mapper;
         this.producer = producer;
     }
 
     public Mono<WalletResponseDto> createWallet(final Long userId) {
-        return Mono.just(Wallet.builder()
+        return Mono.just(WalletEntity.builder()
                         .userId(userId)
                         .balance(BigDecimal.ZERO)
                         .build())
                 .flatMap(walletRepository::save)
                 .map(mapper::toDto)
-                .doOnSuccess(res -> producer.sendTransaction(Transaction.builder()
+                .doOnSuccess(res -> producer.sendTransaction(TransactionEntity.builder()
                                 .timestamp(LocalDateTime.now())
                                 .type(CREATE)
                                 .amount(BigDecimal.ZERO)
@@ -56,7 +56,7 @@ public class WalletService {
                 })
                 .flatMap(walletRepository::save)
                 .map(mapper::toDto)
-                .doOnSuccess(res -> producer.sendTransaction(Transaction.builder()
+                .doOnSuccess(res -> producer.sendTransaction(TransactionEntity.builder()
                         .timestamp(LocalDateTime.now())
                         .type(TRANSFER)
                         .amount(amount)
@@ -74,7 +74,7 @@ public class WalletService {
                 })
                 .flatMap(walletRepository::save)
                 .map(mapper::toDto)
-                .doOnSuccess(res -> producer.sendTransaction(Transaction.builder()
+                .doOnSuccess(res -> producer.sendTransaction(TransactionEntity.builder()
                         .timestamp(LocalDateTime.now())
                         .type(WITHDRAW)
                         .amount(amount)

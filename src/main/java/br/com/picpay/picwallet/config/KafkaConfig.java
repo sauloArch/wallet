@@ -1,6 +1,6 @@
 package br.com.picpay.picwallet.config;
 
-import br.com.picpay.picwallet.domain.entity.Transaction;
+import br.com.picpay.picwallet.domain.entity.TransactionEntity;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -24,7 +24,7 @@ public class KafkaConfig {
     private String bootstrapServers;
 
     @Bean
-    public ProducerFactory<String, Transaction> producerFactory() {
+    public ProducerFactory<String, TransactionEntity> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -33,7 +33,7 @@ public class KafkaConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, Transaction> kafkaTemplate() {
+    public KafkaTemplate<String, TransactionEntity> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 

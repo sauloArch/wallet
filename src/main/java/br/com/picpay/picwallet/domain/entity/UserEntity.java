@@ -1,6 +1,5 @@
 package br.com.picpay.picwallet.domain.entity;
 
-import br.com.picpay.picwallet.domain.enums.TransactionType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,21 +8,17 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Builder
 @Setter
 @Getter
-@Table("transactions")
+@Table("users")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Transaction {
-
+public class UserEntity {
     @Id
     private Long id;
-    private Long userId;
-    private BigDecimal amount;
-    private TransactionType type;
-    private LocalDateTime timestamp;
+    private String name;
+    private String email;
+    private String password;
 }
