@@ -17,7 +17,11 @@ import java.math.BigDecimal;
 @RequestMapping("/wallets")
 public class WalletController {
 
-    private WalletService walletService;
+    private final WalletService walletService;
+
+    public WalletController(WalletService walletService) {
+        this.walletService = walletService;
+    }
 
     @PostMapping("/{userId}")
     public Mono<ResponseEntity<WalletResponseDto>> createWallet(@PathVariable Long userId) {

@@ -20,7 +20,7 @@ public class WalletService {
         this.mapper = mapper;
     }
 
-    public Mono<WalletResponseDto> createWallet(Long userId) {
+    public Mono<WalletResponseDto> createWallet(final Long userId) {
         return Mono.just(Wallet.builder()
                         .userId(userId)
                         .balance(BigDecimal.ZERO)
@@ -29,11 +29,11 @@ public class WalletService {
                 .map(mapper::toDto);
     }
 
-    public Mono<WalletResponseDto> getWallet(Long userId) {
+    public Mono<WalletResponseDto> getWallet(final Long userId) {
         return walletRepository.findByUserId(userId).map(mapper::toDto);
     }
 
-    public Mono<WalletResponseDto> deposit(Long userId, BigDecimal amount) {
+    public Mono<WalletResponseDto> deposit(final Long userId, final BigDecimal amount) {
         return getWallet(userId)
                 .map(wallet -> {
                     wallet.setBalance(wallet.getBalance().add(amount));
@@ -43,7 +43,7 @@ public class WalletService {
                 .map(mapper::toDto);
     }
 
-    public Mono<WalletResponseDto> withdraw(Long userId, BigDecimal amount) {
+    public Mono<WalletResponseDto> withdraw(final Long userId, final BigDecimal amount) {
         return getWallet(userId)
                 .filter(wall -> wall.getBalance().compareTo(amount) > 0)
                 .switchIfEmpty(Mono.error(new RuntimeException("Insufficient funds")))

@@ -16,8 +16,12 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    @Autowired
-    private UserService userService;
+
+    private final  UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping
     public Mono<ResponseEntity<UserResponseDto>> createUser(@RequestBody UserRequestDto user) {
