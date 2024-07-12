@@ -3,7 +3,6 @@ package br.com.picpay.picwallet.controller.user;
 import br.com.picpay.picwallet.controller.user.dto.UserRequestDto;
 import br.com.picpay.picwallet.controller.user.dto.UserResponseDto;
 import br.com.picpay.picwallet.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
