@@ -2,7 +2,6 @@ package br.com.picpay.picwallet.service;
 
 import br.com.picpay.picwallet.controller.user.dto.UserRequestDto;
 import br.com.picpay.picwallet.controller.user.dto.UserResponseDto;
-import br.com.picpay.picwallet.domain.entity.User;
 import br.com.picpay.picwallet.domain.mapper.UserMapper;
 import br.com.picpay.picwallet.domain.repository.UserRepository;
 import org.springframework.stereotype.Service;
