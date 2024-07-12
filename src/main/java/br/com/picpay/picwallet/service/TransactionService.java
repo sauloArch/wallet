@@ -2,15 +2,11 @@ package br.com.picpay.picwallet.service;
 
 import br.com.picpay.picwallet.controller.transaction.dto.TransactionResponseDto;
 import br.com.picpay.picwallet.domain.entity.Transaction;
-import br.com.picpay.picwallet.domain.enums.TransactionType;
 import br.com.picpay.picwallet.domain.mapper.TransactionMapper;
 import br.com.picpay.picwallet.domain.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Service
 public class TransactionService {
@@ -23,14 +19,8 @@ public class TransactionService {
         this.mapper = mapper;
     }
 
-    public Mono<TransactionResponseDto> createTransaction(final Long userId, final BigDecimal amount, final String type) {
-        return Mono.just(Transaction.builder()
-                        .userId(userId)
-                        .amount(amount)
-                        .type(TransactionType.valueOf(type))
-                        .timestamp(LocalDateTime.now())
-                        .build())
-                .flatMap(transactionRepository::save)
+    public Mono<TransactionResponseDto> createTransaction(final Transaction transaction) {
+        return transactionRepository.save(transaction)
                 .map(mapper::toDto);
     }
 
